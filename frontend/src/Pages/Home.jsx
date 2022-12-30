@@ -4,6 +4,7 @@ import TodoList from "../Components/TodoList";
 import ChatGPT from "../Components/ChatGPT";
 import Sidebar from "../Components/utilities/Sidebar";
 import ImageToText from "../Components/Image-to-Text/ImageToText";
+import Notes from "../Components/Notes/Notes";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
         <Routes>
           <Route path="/todo-list" element={<TodoList />} />
           <Route path="/codex" element={<ChatGPT />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/image-to-text" element={<ImageToText />} />
         </Routes>
       </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { MdSend } from "react-icons/md";
+import { AiOutlineSave } from "react-icons/ai";
 import Loading from "./utilities/Loading";
 import Button from "./utilities/Button";
 
@@ -35,18 +36,23 @@ const ChatGPT = () => {
           <MdSend className="text-[30px] font-light p-1" />
         </button>
       </div>
-      <div className="w-full h-full mt-10 bg-white p-5 flex justify-center items-center overflow-scroll overflow-x-hidden scrollbar-hide">
-        {loading ? (
+      {loading && (
+        <div className="w-full h-full flex justify-center items-center">
           <Loading />
-        ) : (
-          <div className="w-full h-full whitespace-pre-wrap ">
-            <p className="">{answer}</p>
+        </div>
+      )}
+      {answer && !loading && (
+        <>
+          <div className="w-full h-full mt-10 bg-white p-5 flex justify-center items-center overflow-scroll overflow-x-hidden scrollbar-hide">
+            <div className="w-full h-full whitespace-pre-wrap ">
+              <p className="">{answer}</p>
+            </div>
           </div>
-        )}
-      </div>
-      <div className="w-full my-2 flex justify-end items-center">
-        <Button label="Save" />
-      </div>
+          <div className="w-full my-2 flex justify-end items-center">
+            <Button label="Save" Icon={AiOutlineSave} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

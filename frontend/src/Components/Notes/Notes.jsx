@@ -1,31 +1,64 @@
-import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { useEffect, useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
-import { BsCheck2Square } from "react-icons/bs";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 import Button from "../utilities/Button";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { RiDeleteBin5Fill } from "react-icons/ri";
+import axios from "axios";
 
 const Notes = () => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
-  const [notes, setNotes] = useState([{ title: "title" }]);
+  const [notes, setNotes] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [updatingNoteId, setUpdatingNoteId] = useState("");
+
+  const getAllNotes = async () => {
+    const res = await axios.get("http://localhost:5000/api/v1/notes");
+    setNotes(await res.data);
+  };
+
+  useEffect(() => {
+    getAllNotes();
+  }, []);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
-  const addNoteHandler = () => {
-    setNotes((prev) => [...prev, { title: title, note: text }]);
+  const addNoteHandler = async () => {
+    const res = await axios.post("http://localhost:5000/api/v1/notes", {
+      title: title,
+      note: text,
+    });
+    getAllNotes();
     setOpen(false);
     setTitle("");
     setText("");
   };
 
+  const deleteNoteHandler = async (noteId) => {
+    const res = await axios.delete(
+      `http://localhost:5000/api/v1/notes/${noteId}`
+    );
+    getAllNotes();
+  };
+
+  const updateNote = async (noteId) => {
+    const res = await axios.patch(
+      `http://localhost:5000/api/v1/notes/${noteId}`,
+      { title: title, note: text }
+    );
+    setEdit(false);
+    setOpen(false);
+    setTitle("");
+    setText("");
+    getAllNotes();
+  };
+
   return (
     <div className="w-full h-full p-10 flex flex-col overflow-scroll overflow-x-hidden">
-      <h1 className="text-[32px] font-semibold uppercase mb-10  ">Todo List</h1>
+      <h1 className="text-[32px] font-semibold uppercase mb-10  ">Notes</h1>
       <div className="w-full flex items-center rounded-md ">
         <Button label="Create" onClick={onOpenModal} />
       </div>
@@ -55,9 +88,20 @@ const Notes = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Type your note..."
-            ></textarea>
+            >
+              {text}
+            </textarea>
             <div className="w-full flex justify-end mt-2">
-              <Button label="save" onClick={addNoteHandler} />
+              <Button
+                label={edit ? "Update" : "Save"}
+                onClick={() => {
+                  if (edit) {
+                    updateNote(updatingNoteId);
+                  } else {
+                    addNoteHandler();
+                  }
+                }}
+              />
             </div>
           </div>
         </div>
@@ -77,10 +121,18 @@ const Notes = () => {
                 <span className="">{note.title}</span>
               </div>
               <div>
-                <button>
+                <button
+                  onClick={() => {
+                    setUpdatingNoteId(note._id);
+                    setTitle(note.title);
+                    setText(note.note);
+                    setEdit(true);
+                    setOpen(true);
+                  }}
+                >
                   <BsFillPencilFill className="text-[30px] font-light p-1 mr-2 text-green-500" />
                 </button>
-                <button>
+                <button onClick={() => deleteNoteHandler(note._id)}>
                   <RiDeleteBin5Fill className="text-[30px] font-light p-1 text-red-500" />
                 </button>
               </div>

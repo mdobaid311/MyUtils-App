@@ -3,14 +3,20 @@ import { RiTodoFill } from "react-icons/ri";
 import { TbNotes } from "react-icons/tb";
 import { GoHubot } from "react-icons/go";
 import { MdOutlineImageSearch } from "react-icons/md";
- import { Link } from "react-router-dom";
+import { AiOutlineFileWord } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const tabs = [
     { Icon: RiTodoFill, label: "Todo List", link: "/todo-list" },
     { Icon: TbNotes, label: "Notes", link: "/notes" },
     { Icon: GoHubot, label: "ChatGPT", link: "/codex" },
-    { Icon: MdOutlineImageSearch, label: "Image-to-text", link: "/image-to-text" },
+    {
+      Icon: MdOutlineImageSearch,
+      label: "Image-to-Text",
+      link: "/image-to-text",
+    },
+    { Icon: AiOutlineFileWord, label: "PDF-to-Word", link: "/pdf-to-word" },
   ];
 
   return (

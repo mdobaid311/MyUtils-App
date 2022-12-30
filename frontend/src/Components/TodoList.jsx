@@ -34,16 +34,16 @@ const TodoList = () => {
     setTodos((prev) => [...prev, res.data]);
   };
 
-  const deleteTodo = async (_id) => {
-    const res = await axios.delete(`http://localhost:5000/api/v1/todos/${_id}`);
+  const deleteTodo = async (todoId) => {
+    const res = await axios.delete(
+      `http://localhost:5000/api/v1/todos/${todoId}`
+    );
     getAllTodos();
   };
 
   return (
     <div className="w-full h-full p-10 flex flex-col overflow-scroll overflow-x-hidden">
-      <h1 className="text-[32px] font-semibold uppercase mb-10 px-5">
-        Todo List
-      </h1>
+      <h1 className="text-[32px] font-semibold uppercase mb-10  ">Todo List</h1>
       <div className="w-full flex items-center bg-white rounded-md p-2">
         <input
           type="text"

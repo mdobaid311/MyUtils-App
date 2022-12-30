@@ -21,7 +21,7 @@ const ImageToText = () => {
 
   return (
     <div className="w-full h-full p-10 flex flex-col overflow-scroll overflow-x-hidden scrollbar-hide">
-      <h1 className="text-[32px] font-semibold uppercase mb-10 px-5">
+      <h1 className="text-[32px] font-semibold uppercase mb-10 ">
         Image-to-Text
       </h1>
       <div className="bg-white flex items-center justify-between p-2 rounded-md">

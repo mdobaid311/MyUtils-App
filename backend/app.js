@@ -2,8 +2,7 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
-const { Configuration, OpenAIApi } = require("openai");
-
+ 
 // Extra security packages
 const helmet = require("helmet");
 const cors = require("cors");
@@ -16,6 +15,7 @@ const authenticateUser = require("./middleware/authentication");
 const authRouter = require("./routes/auth");
 const todosRouter = require("./routes/todos");
 const codexRouter = require("./routes/codex");
+const notesRouter = require("./routes/notes");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -40,6 +40,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/todos", todosRouter);
+app.use("/api/v1/notes", notesRouter);
 app.use("/api/v1/codex", codexRouter);
 
 app.use(notFoundMiddleware);

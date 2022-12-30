@@ -8,6 +8,7 @@ import Button from "./utilities/Button";
 const ChatGPT = () => {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
   const inputRef = useRef();
 
   const resultHandler = async () => {
@@ -16,13 +17,21 @@ const ChatGPT = () => {
       prompt: inputRef.current.value,
     });
     setLoading(false);
-    console.log(await res.data.chatGPTResponse);
-    setAnswer(await res.data.chatGPTResponse);
+    setSaved(false);
+    setAnswer(await res.data.chatGPTResponse.trim());
+  };
+
+  const addNoteHandler = async () => {
+    const res = await axios.post("http://localhost:5000/api/v1/notes", {
+      title: inputRef.current.value,
+      note: answer.trim(),
+    });
+    setSaved(true);
   };
 
   return (
     <div className="w-full h-full p-10 flex flex-col overflow-scroll overflow-x-hidden scrollbar-hide">
-      <h1 className="text-[32px] font-semibold uppercase mb-10 px-5">
+      <h1 className="text-[32px] font-semibold uppercase mb-10  ">
         Ask Codex
       </h1>
       <div className="w-full flex items-center bg-white rounded-md p-2">
@@ -49,7 +58,15 @@ const ChatGPT = () => {
             </div>
           </div>
           <div className="w-full my-2 flex justify-end items-center">
-            <Button label="Save" Icon={AiOutlineSave} />
+            <Button
+              label={saved ? "Saved" : "Save"}
+              Icon={AiOutlineSave}
+              onClick={() => {
+                if (!saved) {
+                  addNoteHandler();
+                }
+              }}
+            />
           </div>
         </>
       )}

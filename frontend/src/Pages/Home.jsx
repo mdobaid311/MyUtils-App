@@ -6,6 +6,7 @@ import Sidebar from "../Components/utilities/Sidebar";
 import ImageToText from "../Components/Image-to-Text/ImageToText";
 import Notes from "../Components/Notes/Notes";
 import PDFToWord from "../Components/PDF-to-Word/PDFToWord";
+import WordToPDF from "../Components/Word-to-PDF/WordToPDF";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
           <Route path="/notes" element={<Notes />} />
           <Route path="/image-to-text" element={<ImageToText />} />
           <Route path="/pdf-to-word" element={<PDFToWord />} />
+          <Route path="/word-to-pdf" element={<WordToPDF />} />
         </Routes>
       </div>
     </div>

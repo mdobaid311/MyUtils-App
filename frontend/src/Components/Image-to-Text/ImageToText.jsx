@@ -2,21 +2,32 @@ import React, { useEffect, useState } from "react";
 import Tesseract from "tesseract.js";
 import Button from "../utilities/Button";
 import Loading from "../utilities/Loading";
+import axios from "axios";
+import { AiOutlineSave } from "react-icons/ai";
 
 const ImageToText = () => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [image, setImage] = useState("");
-  const [progress, setProgress] = useState(0);
+  const [saved, setSaved] = useState(false);
 
   const convertHandler = async () => {
     setLoading(true);
     Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) }).then(
       ({ data: { text } }) => {
         setText(text);
+        setSaved(false);
         setLoading(false);
       }
     );
+  };
+
+  const addNoteHandler = async () => {
+    const res = await axios.post("http://localhost:5000/api/v1/notes", {
+      title: text,
+      note: text,
+    });
+    setSaved(true);
   };
 
   return (
@@ -52,7 +63,15 @@ const ImageToText = () => {
             </div>
           </div>
           <div className="w-full my-2 flex justify-end items-center">
-            <Button label="Save" />
+            <Button
+              label={saved ? "Saved" : "Save"}
+              Icon={AiOutlineSave}
+              onClick={() => {
+                if (!saved) {
+                  addNoteHandler();
+                }
+              }}
+            />
           </div>
         </>
       )}

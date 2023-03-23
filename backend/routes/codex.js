@@ -13,6 +13,7 @@ router.get("", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log("hello")
   try {
     const prompt = req.body.prompt;
 
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
       frequency_penalty: 0.5, // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
       presence_penalty: 0, // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
     });
-
+    console.log(response)
     res.status(200).send({
       chatGPTResponse: response.data.choices[0].text,
     });

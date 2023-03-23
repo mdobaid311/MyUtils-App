@@ -23,7 +23,7 @@ const ImageToText = () => {
   };
 
   const addNoteHandler = async () => {
-    const res = await axios.post("http://localhost:5000/api/v1/notes", {
+    const res = await axios.post("https://my-utils-backend.onrender.com/api/v1/notes", {
       title: text,
       note: text,
     });

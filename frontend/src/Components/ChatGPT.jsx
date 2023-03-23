@@ -13,7 +13,7 @@ const ChatGPT = () => {
 
   const resultHandler = async () => {
     setLoading(true);
-    const res = await axios.post("http://localhost:5000/api/v1/codex", {
+    const res = await axios.post("https://my-utils-backend.onrender.com/api/v1/codex", {
       prompt: inputRef.current.value,
     });
     setLoading(false);
@@ -22,7 +22,7 @@ const ChatGPT = () => {
   };
 
   const addNoteHandler = async () => {
-    const res = await axios.post("http://localhost:5000/api/v1/notes", {
+    const res = await axios.post("https://my-utils-backend.onrender.com/api/v1/notes", {
       title: inputRef.current.value,
       note: answer.trim(),
     });

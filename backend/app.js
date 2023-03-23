@@ -2,7 +2,7 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
- 
+
 // Extra security packages
 const helmet = require("helmet");
 const cors = require("cors");
@@ -16,6 +16,7 @@ const authRouter = require("./routes/auth");
 const todosRouter = require("./routes/todos");
 const codexRouter = require("./routes/codex");
 const notesRouter = require("./routes/notes");
+const PDFtoWordRouter = require("./routes/PDFToWord");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
